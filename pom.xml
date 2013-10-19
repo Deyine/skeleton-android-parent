@@ -1,0 +1,96 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	
+	<groupId>com.android.skeleton</groupId>
+	<artifactId>skeleton-android-parent</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>Android Skeleton - Parent</name>
+	
+	<!-- Minimum maven version required -->
+	<prerequisites>
+		<maven>3.0.4</maven>
+	</prerequisites>
+
+	<!-- Project properties -->
+	<properties>
+		<!-- Files Encoding -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<!-- Java compiler versions -->
+		<java.compiler.source.version>1.6</java.compiler.source.version>
+		<java.compiler.target.version>1.6</java.compiler.target.version>
+	
+		<!-- =========DEPENDENCIES VERSIONS======== -->
+		<!-- Minimum Android version supported. Android 4.0 Ice Cream Sandwich -->
+		<android.version>4.0.1.2</android.version>
+		<!-- Platform Android version -->
+		<android.platform.version>14</android.platform.version>
+
+		<!-- =========PLUGINS VERSIONS======== -->
+		<!-- Android maven plugin version -->
+		<android.plugin.version>3.7.0</android.plugin.version>
+		<compiler.plugin.version>3.1</compiler.plugin.version>
+		
+		<android.sdk.path>/home/deyine/apps/android-sdks</android.sdk.path>
+		
+	</properties>
+
+	<!-- Project modules -->
+	<modules>
+		<!-- Main module. Built as Android application (apk) -->
+		<module>skeleton-app</module>
+		<module>skeleton-instrumentation-tests</module>
+	</modules>
+
+	<dependencyManagement>
+		<dependencies>
+		    
+		    <!-- Android lib -->
+			<dependency>
+				<groupId>com.google.android</groupId>
+				<artifactId>android</artifactId>
+				<scope>provided</scope>
+				<version>${android.version}</version>
+			</dependency>
+			
+			<!-- Android lib for test -->
+			<dependency>
+				<groupId>com.google.android</groupId>
+				<artifactId>android-test</artifactId>
+				<scope>provided</scope>
+				<version>${android.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<!-- Android maven plugin declaration-->
+				<plugin>
+					<groupId>com.jayway.maven.plugins.android.generation2</groupId>
+					<artifactId>android-maven-plugin</artifactId>
+					<version>${android.plugin.version}</version>
+					<extensions>true</extensions>
+					<configuration>
+						<sdk>
+							<platform>${android.platform.version}</platform>
+						</sdk>
+					</configuration>
+				</plugin>
+				<!-- Maven compiler plugin -->
+				<plugin>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>${compiler.plugin.version}</version>
+					<configuration>
+						<source>${java.compiler.source.version}</source>
+						<target>${java.compiler.target.version}</target>
+					</configuration>
+				</plugin>
+			</plugins>
+			
+		</pluginManagement>
+	</build>
+</project>

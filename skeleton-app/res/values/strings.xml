@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Skeleton Android App</string>
+    <string name="title_activity_list_person">Persons List</string>
+    <string name="action_settings">Settings</string>
+    
+    <!-- Person Activity -->
+    <string name="add_person_button">Add person</string>
+
+</resources>
