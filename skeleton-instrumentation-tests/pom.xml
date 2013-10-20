@@ -77,7 +77,7 @@
 									<goal>pull</goal>
 								</goals>
 								<configuration>
-									<pullSource>/data/data/com.octo.android.sample/files/coverage.ec</pullSource>
+									<pullSource>/data/data/com.android.skeleton/files/coverage.ec</pullSource>
 									<pullDestination>${project.basedir}/../skeleton-app/target/jacoco-it.exec</pullDestination>
 								</configuration>
 							</execution>

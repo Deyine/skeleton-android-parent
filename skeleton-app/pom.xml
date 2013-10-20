@@ -30,4 +30,61 @@
 			</plugin>
 		</plugins>
 	</build>
+
+	<profiles>
+		<profile>
+			<id>jacoco</id>
+			<properties>
+				<test.directory>src/test/java</test.directory>
+			</properties>
+			<dependencies>
+				<dependency>
+					<groupId>org.jacoco</groupId>
+					<artifactId>org.jacoco.agent</artifactId>
+					<classifier>runtime</classifier>
+					<scope>compile</scope>
+				</dependency>
+			</dependencies>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.jacoco</groupId>
+						<artifactId>jacoco-maven-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>instrument-classes</id>
+								<goals>
+									<goal>instrument</goal>
+								</goals>
+								<configuration>
+									<excludes>
+										<exclude>*test*</exclude>
+										<exclude>*/test/*</exclude>
+									</excludes>
+								</configuration>
+							</execution>
+							<execution>
+								<id>restore-instrumented-classes</id>
+								<phase>package</phase>
+								<goals>
+									<goal>restore-instrumented-classes</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>com.jayway.maven.plugins.android.generation2</groupId>
+						<artifactId>android-maven-plugin</artifactId>
+						<configuration>
+							<test>
+								<coverage>true</coverage>
+								<createReport>true</createReport>
+							</test>
+						</configuration>
+						<extensions>true</extensions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>
