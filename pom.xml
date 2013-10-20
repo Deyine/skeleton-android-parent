@@ -2,13 +2,13 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
-	
+
 	<groupId>com.android.skeleton</groupId>
 	<artifactId>skeleton-android-parent</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Android Skeleton - Parent</name>
-	
+
 	<!-- Minimum maven version required -->
 	<prerequisites>
 		<maven>3.0.4</maven>
@@ -21,7 +21,7 @@
 		<!-- Java compiler versions -->
 		<java.compiler.source.version>1.6</java.compiler.source.version>
 		<java.compiler.target.version>1.6</java.compiler.target.version>
-	
+
 		<!-- =========DEPENDENCIES VERSIONS======== -->
 		<!-- Minimum Android version supported. Android 4.0 Ice Cream Sandwich -->
 		<android.version>4.0.1.2</android.version>
@@ -32,9 +32,11 @@
 		<!-- Android maven plugin version -->
 		<android.plugin.version>3.7.0</android.plugin.version>
 		<compiler.plugin.version>3.1</compiler.plugin.version>
-		
+		<jacoco.plugin.version>0.6.3.201306030806</jacoco.plugin.version>
+		<cobertura.plugin.version>2.6</cobertura.plugin.version>
+
 		<android.sdk.path>/home/deyine/apps/android-sdks</android.sdk.path>
-		
+
 	</properties>
 
 	<!-- Project modules -->
@@ -46,15 +48,15 @@
 
 	<dependencyManagement>
 		<dependencies>
-		    
-		    <!-- Android lib -->
+
+			<!-- Android lib -->
 			<dependency>
 				<groupId>com.google.android</groupId>
 				<artifactId>android</artifactId>
 				<scope>provided</scope>
 				<version>${android.version}</version>
 			</dependency>
-			
+
 			<!-- Android lib for test -->
 			<dependency>
 				<groupId>com.google.android</groupId>
@@ -62,13 +64,21 @@
 				<scope>provided</scope>
 				<version>${android.version}</version>
 			</dependency>
+
+			<!-- Coverage Tools -->
+			<dependency>
+				<groupId>org.jacoco</groupId>
+				<artifactId>org.jacoco.agent</artifactId>
+				<version>${jacoco.plugin.version}</version>
+				<classifier>runtime</classifier>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
 	<build>
 		<pluginManagement>
 			<plugins>
-				<!-- Android maven plugin declaration-->
+				<!-- Android maven plugin declaration -->
 				<plugin>
 					<groupId>com.jayway.maven.plugins.android.generation2</groupId>
 					<artifactId>android-maven-plugin</artifactId>
@@ -89,8 +99,41 @@
 						<target>${java.compiler.target.version}</target>
 					</configuration>
 				</plugin>
+
+				<!-- Code coverage -->
+				<plugin>
+					<groupId>org.jacoco</groupId>
+					<artifactId>jacoco-maven-plugin</artifactId>
+					<version>${jacoco.plugin.version}</version>
+				</plugin>
 			</plugins>
-			
+
 		</pluginManagement>
 	</build>
+
+	<profiles>
+		<profile>
+			<id>jacoco</id>
+			<modules>
+				<module>skeleton-instrumentation-tests</module>
+			</modules>
+			<properties>
+				<sonar.branch>jacoco</sonar.branch>
+				<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+				<sonar.jacoco.excludes>*test*</sonar.jacoco.excludes>
+				<sonar.jacoco.itReportPath>target/jacoco-it.exec</sonar.jacoco.itReportPath>
+				<sonar.jacoco.reportPath>jacoco.exec</sonar.jacoco.reportPath>
+				<sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>
+			</properties>
+			<reporting>
+				<plugins>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>cobertura-maven-plugin</artifactId>
+						<version>${cobertura.plugin.version}</version>
+					</plugin>
+				</plugins>
+			</reporting>
+		</profile>
+	</profiles>
 </project>
