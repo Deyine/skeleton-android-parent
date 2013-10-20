@@ -19,6 +19,14 @@
 			<type>jar</type>
 			<scope>provided</scope>
 		</dependency>
+		
+		<dependency>
+			<groupId>com.android.skeleton</groupId>
+			<artifactId>skeleton-app</artifactId>
+			<version>${project.version}</version>
+			<type>apk</type>
+			<scope>provided</scope>
+		</dependency>
 
 		<dependency>
 			<groupId>com.google.android</groupId>
